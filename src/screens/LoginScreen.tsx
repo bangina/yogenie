@@ -2,13 +2,12 @@ import { useNavigation } from "@react-navigation/core";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, UserCredential } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { auth } from "../firebase";
-const primaryColor = "#EC657F";
+import { auth } from "../../firebase";
+export const primaryColor = "#EC657F";
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigation = useNavigation();
   const handleSignup = (em: string, pw: string) => {
     createUserWithEmailAndPassword(auth, em, pw)
       .then((userCredential) => {
@@ -37,7 +36,7 @@ const LoginScreen = () => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        navigation.navigate("Home");
+        navigation.navigate("AddLog");
       }
     });
     return unsubscribe;

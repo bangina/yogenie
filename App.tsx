@@ -3,11 +3,10 @@ import * as React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { StyleSheet, View, Text } from "react-native";
-import HomeScreen from "./screens/HomeScreen";
-import LoginScreen from "./screens/LoginScreen";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import AddLogScreen from "./screens/AddLogScreen";
+import AddLogScreen from "./src/screens/AddLogScreen";
+import HomeScreen from "./src/screens/HomeScreen";
+import LoginScreen from "./src/screens/LoginScreen";
 
 type RootStackParamList = {
   // Login: { userId: string };
@@ -22,6 +21,7 @@ function App() {
       <Stack.Navigator initialRouteName='Login'>
         <Stack.Screen options={{ headerShown: false }} name='Login' component={LoginScreen} />
         <Stack.Screen options={{ headerShown: false }} name='Home' component={HomeMainScreen} />
+        <Stack.Screen options={{ headerShown: false }} name='AddLog' component={AddLogScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -39,7 +39,7 @@ const HomeMainScreen = () => {
 
           if (route.name === "Home") {
             iconName = focused ? "ios-calendar" : "ios-calendar-sharp";
-          } else if (route.name === "Add Log") {
+          } else if (route.name === "AddLog") {
             iconName = focused ? "chatbubbles" : "chatbubbles-outline";
           }
 
@@ -51,7 +51,7 @@ const HomeMainScreen = () => {
       })}
     >
       <Tab.Screen options={{ headerShown: false }} name='Home' component={HomeScreen} />
-      <Tab.Screen options={{ headerShown: false }} name='Add Log' component={AddLogScreen} />
+      <Tab.Screen options={{ headerShown: false }} name='AddLog' component={AddLogScreen} />
     </Tab.Navigator>
   );
 };

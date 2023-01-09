@@ -1,6 +1,6 @@
 import React from "react";
 import { KeyboardAvoidingView, StyleSheet, Text, TouchableOpacity } from "react-native";
-import { auth } from "../firebase";
+import { auth } from "../../firebase";
 
 const HomeScreen = ({ navigation }): JSX.Element => {
   const handleSignOut = () => {
