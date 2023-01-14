@@ -1,7 +1,8 @@
 import React from "react";
 import { KeyboardAvoidingView, StyleSheet, Text, TouchableOpacity } from "react-native";
-import { auth } from "../../firebase";
-import HeartIcon from "../../assets/images/doodle_heart.svg";
+import { auth } from "../../../firebase";
+import MonthlyContainer from "./components/MonthlyContainer";
+import HeartIcon from "../../../assets/images/doodle_heart.svg";
 
 const HomeScreen = ({ navigation }): JSX.Element => {
   const handleSignOut = () => {
@@ -18,8 +19,9 @@ const HomeScreen = ({ navigation }): JSX.Element => {
   };
   return (
     <KeyboardAvoidingView style={styles.container} behavior='padding'>
-      <HeartIcon width={20} fill='red' />
       <Text>Email: {auth?.currentUser?.email}</Text>
+      <HeartIcon width={20} fill='red' />
+      <MonthlyContainer year={2023} month={1} />
       <TouchableOpacity style={styles.button}></TouchableOpacity>
     </KeyboardAvoidingView>
   );

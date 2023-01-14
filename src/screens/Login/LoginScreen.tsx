@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/core";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, UserCredential } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { auth } from "../../firebase";
+import { auth } from "../../../firebase";
 export const primaryColor = "#EC657F";
 
 const LoginScreen = ({ navigation }) => {

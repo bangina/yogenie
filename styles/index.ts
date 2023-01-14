@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { primaryColor } from "../src/screens/LoginScreen";
+import { primaryColor } from "../src/screens/Login/LoginScreen";
 export const globalStyles = StyleSheet.create({
   container: {
     flex: 1,

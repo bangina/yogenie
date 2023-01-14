@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
-import { primaryColor } from "../screens/LoginScreen";
+import { primaryColor } from "../../Login/LoginScreen";
 
 const ChatBubble = ({ chatItem }) => {
   const [value, setValue] = useState("");

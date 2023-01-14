@@ -4,9 +4,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import AddLogScreen from "./src/screens/AddLogScreen";
-import HomeScreen from "./src/screens/HomeScreen";
-import LoginScreen from "./src/screens/LoginScreen";
+import AddLogScreen from "./src/screens/AddLog/AddLogScreen";
+import HomeScreen from "./src/screens/Home/HomeScreen";
+import LoginScreen from "./src/screens/Login/LoginScreen";
 
 type RootStackParamList = {
   // Login: { userId: string };

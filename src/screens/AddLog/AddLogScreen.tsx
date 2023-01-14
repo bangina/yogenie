@@ -1,9 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { globalStyles } from "../../styles";
-import ChatBubble from "../components/ChatBubble";
-import ChatInputSection from "../components/ChatInputSection";
-import { primaryColor } from "./LoginScreen";
+import { globalStyles } from "../../../styles";
+import ChatBubble from "./components/ChatBubble";
+import { primaryColor } from "../Login/LoginScreen";
 const enum QuestionType {
   "yesNo" = "yes-no",
   "singleChoice" = "single-choice",
