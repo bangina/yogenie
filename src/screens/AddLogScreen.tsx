@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { globalStyles } from "../../styles";
 import ChatBubble from "../components/ChatBubble";
 import ChatInputSection from "../components/ChatInputSection";
@@ -142,63 +142,65 @@ const AddLogScreen = ({ navigation }): JSX.Element => {
   console.log(currQIdx, "currQIdx");
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior='padding'>
-      <Text style={{ color: "grey" }}>
-        -{today.toDateString()}, {currQIdx}-
-      </Text>
-      <View style={styles.chatContainer}>
-        {chatLogList?.map((item, idx) => (
-          <ChatBubble chatItem={item} key={idx + "chat_buble"} inputComp={undefined} userType={item.userType} />
-        ))}
-        {/* {Object.entries(GenieQuestionList).map(([key, value]) => (
+    <ScrollView style={{ display: "flex" }}>
+      <KeyboardAvoidingView style={styles.container} behavior='padding'>
+        <Text style={{ color: "grey" }}>
+          -{today.toDateString()}, {currQIdx}-
+        </Text>
+        <View style={styles.chatContainer}>
+          {chatLogList?.map((item, idx) => (
+            <ChatBubble chatItem={item} key={idx + "chat_buble"} inputComp={undefined} userType={item.userType} />
+          ))}
+          {/* {Object.entries(GenieQuestionList).map(([key, value]) => (
           <ChatBubble key={key + "chat_buble"} chatItem={value} />
         ))} */}
-      </View>
-      {/*  */}
-      {currentQItem?.questionType === QuestionType.yesNo && (
-        <View style={styles.optionCntr}>
-          {currentQItem?.options?.map((optionItem, idx) => (
-            <TouchableOpacity
-              key={optionItem?.value + "option"}
-              onPress={() => storeUserAnswer(optionItem, currQIdx)}
-              style={[styles.yesNoItem, idx === 0 ? globalStyles.outlinedBtn : globalStyles.primaryBtn]}
-            >
-              <Text style={[styles.optionItemText, idx === 0 ? globalStyles.colorPrimary : globalStyles.colorWhite]}>{optionItem?.text}</Text>
+        </View>
+        {/*  */}
+        {currentQItem?.questionType === QuestionType.yesNo && (
+          <View style={styles.optionCntr}>
+            {currentQItem?.options?.map((optionItem, idx) => (
+              <TouchableOpacity
+                key={optionItem?.value + "option"}
+                onPress={() => storeUserAnswer(optionItem, currQIdx)}
+                style={[styles.yesNoItem, idx === 0 ? globalStyles.outlinedBtn : globalStyles.primaryBtn]}
+              >
+                <Text style={[styles.optionItemText, idx === 0 ? globalStyles.colorPrimary : globalStyles.colorWhite]}>{optionItem?.text}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        )}
+        {currentQItem?.questionType === QuestionType.singleChoice && (
+          <View style={styles.optionCntr}>
+            {currentQItem?.options?.map((optionItem) => (
+              <TouchableOpacity key={optionItem?.value + "option"} onPress={() => storeUserAnswer(optionItem, currQIdx)} style={styles.optionItem}>
+                <Text style={styles.optionItemText}>{optionItem?.text}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        )}
+        {currentQItem?.questionType === QuestionType.textInput && (
+          <View style={styles.chatInputCntr}>
+            <TextInput placeholder='type here...' value={value} onChangeText={(text) => setValue(text)} autoCapitalize={"none"} style={styles.input} />
+            <TouchableOpacity style={styles.button} onPress={() => storeUserAnswer({ text: value, value }, currQIdx)}>
+              <Text style={styles.buttonText}>전송</Text>
             </TouchableOpacity>
-          ))}
-        </View>
-      )}
-      {currentQItem?.questionType === QuestionType.singleChoice && (
-        <View style={styles.optionCntr}>
-          {currentQItem?.options?.map((optionItem) => (
-            <TouchableOpacity key={optionItem?.value + "option"} onPress={() => storeUserAnswer(optionItem, currQIdx)} style={styles.optionItem}>
-              <Text style={styles.optionItemText}>{optionItem?.text}</Text>
+          </View>
+        )}
+        {currentQItem?.questionType === QuestionType.finish && (
+          <View style={styles.chatInputCntr}>
+            <TouchableOpacity style={styles.button} onPress={() => handleFinish(goodBye)}>
+              <Text style={styles.buttonText}>{goodBye}</Text>
             </TouchableOpacity>
-          ))}
-        </View>
-      )}
-      {currentQItem?.questionType === QuestionType.textInput && (
-        <View style={styles.chatInputCntr}>
-          <TextInput placeholder='type here...' value={value} onChangeText={(text) => setValue(text)} autoCapitalize={"none"} style={styles.input} />
-          <TouchableOpacity style={styles.button} onPress={() => storeUserAnswer({ text: value, value }, currQIdx)}>
-            <Text style={styles.buttonText}>전송</Text>
-          </TouchableOpacity>
-        </View>
-      )}
-      {currentQItem?.questionType === QuestionType.finish && (
-        <View style={styles.chatInputCntr}>
-          <TouchableOpacity style={styles.button} onPress={() => handleFinish(goodBye)}>
-            <Text style={styles.buttonText}>{goodBye}</Text>
-          </TouchableOpacity>
-        </View>
-      )}
+          </View>
+        )}
 
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => clearList()}>
-          <Text style={styles.buttonText}>초기화</Text>
-        </TouchableOpacity>
-      </View>
-    </KeyboardAvoidingView>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={() => clearList()}>
+            <Text style={styles.buttonText}>초기화</Text>
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
 
