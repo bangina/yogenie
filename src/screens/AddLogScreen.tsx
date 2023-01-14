@@ -62,8 +62,7 @@ export const GenieQuestionList = {
     label: { text: `어떤 점이었어요?` },
     questionType: QuestionType.textInput,
     nextMap: {
-      yes: "4-1",
-      no: "4-1",
+      fixed: "4-1",
     },
     disabled: false,
   },
@@ -72,7 +71,7 @@ export const GenieQuestionList = {
     label: { text: `오늘 특별히 든 생각이 있어요?` },
     questionType: QuestionType.textInput,
     nextMap: {
-      yes: "2-1",
+      fixed: "2-1",
     },
     nextText: "",
     disabled: false,
@@ -81,7 +80,7 @@ export const GenieQuestionList = {
     label: { text: `다음에 요가할 때 특별히 집중하고 싶은 부분이 있으면 말해주세요.` },
     questionType: QuestionType.textInput,
     nextMap: {
-      fixed: "2-1",
+      fixed: "end",
     },
     nextText: "좋아요. 기억해둘게요.",
     disabled: false,
