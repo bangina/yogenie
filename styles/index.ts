@@ -1,32 +1,32 @@
-import { StyleSheet } from "react-native";
-import { primaryColor } from "../src/screens/Login/LoginScreen";
+import { StyleSheet } from 'react-native'
+import { colors } from '../src/screens/Login/LoginScreen'
 export const globalStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   bgPrimary: {
-    backgroundColor: primaryColor,
+    backgroundColor: colors.primary,
   },
   bgWhite: {
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
   },
   colorPrimary: {
-    color: primaryColor,
+    color: colors.primary,
   },
   colorWhite: {
-    color: "#fff",
+    color: '#fff',
   },
   primaryBtn: {
-    backgroundColor: primaryColor,
+    backgroundColor: colors.primary,
     borderWidth: 1,
-    borderColor: primaryColor,
+    borderColor: colors.primary,
   },
   outlinedBtn: {
-    backgroundColor: "#fff",
-    borderColor: primaryColor,
+    backgroundColor: '#fff',
+    borderColor: colors.primary,
     borderWidth: 1,
   },
-});
+})

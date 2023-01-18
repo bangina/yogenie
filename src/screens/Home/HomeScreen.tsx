@@ -1,8 +1,13 @@
-import React from "react";
-import { KeyboardAvoidingView, StyleSheet, Text, TouchableOpacity } from "react-native";
-import { auth } from "../../../firebase";
-import MonthlyContainer from "./components/MonthlyContainer";
-import HeartIcon from "../../../assets/images/doodle_heart.svg";
+import React from 'react'
+import {
+  KeyboardAvoidingView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from 'react-native'
+import { auth } from '../../../firebase'
+import MonthlyContainer from './components/MonthlyContainer'
+import HeartIcon from '../../../assets/images/doodle_heart.svg'
 
 const HomeScreen = ({ navigation }): JSX.Element => {
   const handleSignOut = () => {
@@ -10,29 +15,29 @@ const HomeScreen = ({ navigation }): JSX.Element => {
       .signOut()
       .then(() => {
         // Sign-out successful.
-        navigation.replace("Login");
+        navigation.replace('Login')
       })
       .catch((error) => {
         // An error happened.
-        alert(error);
-      });
-  };
+        alert(error)
+      })
+  }
   return (
-    <KeyboardAvoidingView style={styles.container} behavior='padding'>
-      <Text>Email: {auth?.currentUser?.email}</Text>
-      <HeartIcon width={20} fill='red' />
+    <KeyboardAvoidingView style={styles.container} behavior="padding">
       <MonthlyContainer year={2023} month={1} />
       <TouchableOpacity style={styles.button}></TouchableOpacity>
     </KeyboardAvoidingView>
-  );
-};
+  )
+}
 
-export default HomeScreen;
+export default HomeScreen
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: 'flex-start',
+    paddingTop: 36,
+    backgroundColor: '#fff',
   },
   button: {},
-});
+})
