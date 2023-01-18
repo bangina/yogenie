@@ -1,13 +1,9 @@
 import React from 'react'
-import {
-  KeyboardAvoidingView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-} from 'react-native'
+import { KeyboardAvoidingView, StyleSheet, View } from 'react-native'
 import { auth } from '../../../firebase'
+import AdmonBannerSection from './components/AdmonBannerSection'
 import MonthlyContainer from './components/MonthlyContainer'
-import HeartIcon from '../../../assets/images/doodle_heart.svg'
+import YogaTipSection from './components/YogaTipSection'
 
 const HomeScreen = ({ navigation }): JSX.Element => {
   const handleSignOut = () => {
@@ -25,7 +21,13 @@ const HomeScreen = ({ navigation }): JSX.Element => {
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <MonthlyContainer year={2023} month={1} />
-      <TouchableOpacity style={styles.button}></TouchableOpacity>
+      {/* 광고 섹션 */}
+      <View style={styles.yogaTipContainer}>
+        <YogaTipSection />
+      </View>
+      <View style={styles.bannerContainer}>
+        <AdmonBannerSection />
+      </View>
     </KeyboardAvoidingView>
   )
 }
@@ -39,5 +41,11 @@ const styles = StyleSheet.create({
     paddingTop: 36,
     backgroundColor: '#fff',
   },
-  button: {},
+  yogaTipContainer: {},
+  bannerContainer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+  },
 })
