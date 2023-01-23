@@ -11,7 +11,7 @@ const AdmonBannerSection = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'grey',
+    backgroundColor: 'pink',
     height: 100,
     display: 'flex',
     justifyContent: 'center',

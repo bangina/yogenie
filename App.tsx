@@ -7,6 +7,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import AddLogScreen from './src/screens/AddLog/AddLogScreen'
 import HomeScreen from './src/screens/Home/HomeScreen'
 import LoginScreen from './src/screens/Login/LoginScreen'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { StyleSheet } from 'react-native'
 
 type RootStackParamList = {
   // Login: { userId: string };
@@ -18,25 +20,27 @@ const Stack = createNativeStackNavigator<RootStackParamList>()
 const Tab = createBottomTabNavigator()
 function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="Login"
-          component={LoginScreen}
-        />
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="Home"
-          component={HomeMainScreen}
-        />
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="AddLog"
-          component={AddLogScreen}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <GestureHandlerRootView style={styles.root}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Login">
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Login"
+            component={LoginScreen}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="Home"
+            component={HomeMainScreen}
+          />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="AddLog"
+            component={AddLogScreen}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </GestureHandlerRootView>
   )
 }
 
@@ -78,3 +82,9 @@ const HomeMainScreen = () => {
     </Tab.Navigator>
   )
 }
+
+const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+  },
+})

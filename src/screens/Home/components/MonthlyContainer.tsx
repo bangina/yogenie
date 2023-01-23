@@ -8,11 +8,10 @@ import {
 import React, { useCallback, useMemo } from 'react'
 import HeartIcon from '../../../../assets/images/doodle_heart.svg'
 import { colors } from '../../Login/LoginScreen'
-
 const enum EMPTY_DATE {
   'EMPTY',
 }
-type DayItemProps = { dayItem: number | EMPTY_DATE.EMPTY }
+type DayItemProps = { dayItem: number | EMPTY_DATE.EMPTY; handleClickDayItem: () => void }
 type LogItemType = {
   uid: string
   createdAt: string
@@ -22,9 +21,11 @@ type LogItemType = {
 export default function MonthlyContainer({
   year,
   month,
+  handleClickDayItem,
 }: {
   year: number
   month: number
+  handleClickDayItem: (dayItem: number | EMPTY_DATE.EMPTY) => void
 }): JSX.Element {
   const stampCategoryMap = {
     '1': <HeartIcon />,
@@ -85,12 +86,17 @@ export default function MonthlyContainer({
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{year}</Text>
-      <Text style={styles.subtitle}>{month}월</Text>
+      <Text style={styles.subtitle}>{month}</Text>
       <View style={styles.gridContainer}>
         <FlatList
           data={daysInMonth(year, month)}
           keyExtractor={(dayItem) => dayItem.toString()}
-          renderItem={(dayItem) => <DayItem dayItem={dayItem.item} />}
+          renderItem={(dayItem) => (
+            <DayItem
+              dayItem={dayItem.item}
+              handleClickDayItem={handleClickDayItem}
+            />
+          )}
           horizontal={false}
           numColumns={7}
         />
@@ -99,10 +105,11 @@ export default function MonthlyContainer({
   )
 }
 
-const DayItem = ({ dayItem }: DayItemProps) => {
+const DayItem = ({ dayItem, handleClickDayItem }: DayItemProps) => {
   console.log(dayItem, 'dayItem')
+
   return (
-    <TouchableOpacity style={styles.dayItem}>
+    <TouchableOpacity style={styles.dayItem} onPress={handleClickDayItem}>
       {typeof dayItem === 'number' && dayItem % 2 === 0 ? (
         <HeartIcon width={'30%'} style={styles.icon} fill={colors.primary} />
       ) : (

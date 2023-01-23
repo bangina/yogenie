@@ -1,5 +1,15 @@
-import React from 'react'
-import { KeyboardAvoidingView, StyleSheet, View } from 'react-native'
+import BottomSheet, {
+  BottomSheetBackdrop,
+  BottomSheetView,
+} from '@gorhom/bottom-sheet'
+import React, { useCallback, useMemo, useRef } from 'react'
+import {
+  Text,
+  Button,
+  KeyboardAvoidingView,
+  StyleSheet,
+  View,
+} from 'react-native'
 import { auth } from '../../../firebase'
 import AdmonBannerSection from './components/AdmonBannerSection'
 import MonthlyContainer from './components/MonthlyContainer'
@@ -18,9 +28,43 @@ const HomeScreen = ({ navigation }): JSX.Element => {
         alert(error)
       })
   }
+  const sheetRef = useRef<BottomSheet>(null)
+
+  // variables
+  const snapPoints = useMemo(() => ['90%'], [])
+
+  // callbacks
+  const handleSheetChange = useCallback((index) => {
+    console.log('handleSheetChange', index)
+  }, [])
+  //
+  const handleSnapPress = useCallback((index) => {
+    sheetRef.current?.snapToIndex(index)
+  }, [])
+  const handleClosePress = useCallback(() => {
+    sheetRef.current?.close()
+  }, [])
+  const renderBackdrop = useCallback(
+    (props) => (
+      <BottomSheetBackdrop
+        {...props}
+        pressBehavior="close"
+        appearsOnIndex={0}
+        disappearsOnIndex={-1}
+      />
+    ),
+    []
+  )
+  const handleClickDayItem = useCallback((dayItem) => {
+    handleSnapPress(0)
+  }, [])
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <MonthlyContainer year={2023} month={1} />
+      <MonthlyContainer
+        year={2023}
+        month={1}
+        handleClickDayItem={handleClickDayItem}
+      />
       {/* 광고 섹션 */}
       <View style={styles.yogaTipContainer}>
         <YogaTipSection />
@@ -28,6 +72,18 @@ const HomeScreen = ({ navigation }): JSX.Element => {
       <View style={styles.bannerContainer}>
         <AdmonBannerSection />
       </View>
+      <Button title="Snap To 90%" onPress={() => handleSnapPress(0)} />
+      <BottomSheet
+        index={-1} //initial snap point index
+        ref={sheetRef}
+        snapPoints={snapPoints}
+        onChange={handleSheetChange}
+        backdropComponent={renderBackdrop}
+      >
+        <BottomSheetView>
+          <Text>Yoga Log Content</Text>
+        </BottomSheetView>
+      </BottomSheet>
     </KeyboardAvoidingView>
   )
 }
