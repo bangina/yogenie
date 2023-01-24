@@ -1,23 +1,28 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import mobileAds, {
+  BannerAd,
+  BannerAdSize,
+  TestIds,
+} from 'react-native-google-mobile-ads'
+import { ADMOB_ID } from '../../../../app_const'
 
 const AdmonBannerSection = () => {
+  mobileAds()
+    .initialize()
+    .then((adapterStatuses) => {
+      console.log(adapterStatuses, 'adapterStatuses')
+    })
+  const adUnitId = __DEV__ ? TestIds.BANNER : ADMOB_ID
+
   return (
-    <View style={styles.container}>
-      <Text>AdmonBannerSection</Text>
-    </View>
+    <BannerAd
+      unitId={adUnitId}
+      size={BannerAdSize.FULL_BANNER}
+      requestOptions={{
+        requestNonPersonalizedAdsOnly: true,
+      }}
+    />
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: 'pink',
-    height: 100,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    color: 'white',
-  },
-})
 
 export default AdmonBannerSection

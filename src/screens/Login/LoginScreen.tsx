@@ -58,7 +58,7 @@ const LoginScreen = ({ navigation }) => {
   useEffect(() => {
     if (user && auth().currentUser) {
       console.log(auth().currentUser, 'currentUser>>')
-      navigation.navigate('HomeMain')
+      navigation.navigate('Home')
     }
   }, [user])
   if (initializing)
