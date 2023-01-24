@@ -1,8 +1,3 @@
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  UserCredential,
-} from 'firebase/auth'
 import React, { useEffect, useState } from 'react'
 import {
   KeyboardAvoidingView,
@@ -12,17 +7,29 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import { auth } from '../../../firebase'
-export const colors = {
-  primary: '#EC657F',
-  black: '#222',
-}
+import auth from '@react-native-firebase/auth'
+import { colors } from '../../../styles'
 
 const LoginScreen = ({ navigation }) => {
+  const [initializing, setInitializing] = useState(true)
+  const [user, setUser] = useState()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  // Handle user state changes
+  const onAuthStateChanged = (user) => {
+    //
+    setUser(user)
+    if (initializing) setInitializing(false)
+  }
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged)
+    return subscriber // unsubscribe on unmount
+  }, [])
+
   const handleSignup = (em: string, pw: string) => {
-    createUserWithEmailAndPassword(auth, em, pw)
+    console.log('signup')
+    auth()
+      .createUserWithEmailAndPassword(em, pw)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user
@@ -37,9 +44,11 @@ const LoginScreen = ({ navigation }) => {
   }
 
   const handleLogin = (em: string, pw: string) => {
-    signInWithEmailAndPassword(auth, em, pw)
-      .then((value: UserCredential) => console.log(value))
+    auth()
+      .signInWithEmailAndPassword(em, pw)
+      .then((value) => console.log(value))
       .catch((error) => {
+        console.log(error)
         const errorCode = error.code
         const errorMessage = error.message
         alert(errorMessage)
@@ -47,13 +56,17 @@ const LoginScreen = ({ navigation }) => {
       })
   }
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        navigation.navigate('Home')
-      }
-    })
-    return unsubscribe
-  }, [])
+    if (user && auth().currentUser) {
+      console.log(auth().currentUser, 'currentUser>>')
+      navigation.navigate('HomeMain')
+    }
+  }, [user])
+  if (initializing)
+    return (
+      <KeyboardAvoidingView style={styles.container} behavior="padding">
+        <Text>initializing</Text>
+      </KeyboardAvoidingView>
+    )
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <View>

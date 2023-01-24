@@ -8,8 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import { globalStyles } from '../../../styles'
-import { colors } from '../Login/LoginScreen'
+import { colors, globalStyles } from '../../../styles'
 import ChatBubble from './components/ChatBubble'
 import { GenieQuestionList, QuestionType } from './types'
 

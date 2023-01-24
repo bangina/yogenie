@@ -3,12 +3,13 @@ import * as React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { StyleSheet } from 'react-native'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import { RecoilRoot } from 'recoil'
 import AddLogScreen from './src/screens/AddLog/AddLogScreen'
 import HomeScreen from './src/screens/Home/HomeScreen'
 import LoginScreen from './src/screens/Login/LoginScreen'
-import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import { StyleSheet } from 'react-native'
 
 type RootStackParamList = {
   // Login: { userId: string };
@@ -20,27 +21,29 @@ const Stack = createNativeStackNavigator<RootStackParamList>()
 const Tab = createBottomTabNavigator()
 function App() {
   return (
-    <GestureHandlerRootView style={styles.root}>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Login">
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="Login"
-            component={LoginScreen}
-          />
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="Home"
-            component={HomeMainScreen}
-          />
-          <Stack.Screen
-            options={{ headerShown: false }}
-            name="AddLog"
-            component={AddLogScreen}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </GestureHandlerRootView>
+    <RecoilRoot>
+      <GestureHandlerRootView style={styles.root}>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Login">
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="Login"
+              component={LoginScreen}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="Home"
+              component={HomeMainScreen}
+            />
+            <Stack.Screen
+              options={{ headerShown: false }}
+              name="AddLog"
+              component={AddLogScreen}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </GestureHandlerRootView>
+    </RecoilRoot>
   )
 }
 

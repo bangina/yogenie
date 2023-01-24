@@ -7,11 +7,15 @@ import {
 } from 'react-native'
 import React, { useCallback, useMemo } from 'react'
 import HeartIcon from '../../../../assets/images/doodle_heart.svg'
-import { colors } from '../../Login/LoginScreen'
+import { colors } from '../../../../styles'
+
 const enum EMPTY_DATE {
   'EMPTY',
 }
-type DayItemProps = { dayItem: number | EMPTY_DATE.EMPTY; handleClickDayItem: () => void }
+type DayItemProps = {
+  dayItem: number | EMPTY_DATE.EMPTY
+  handleClickDayItem: (day: any) => void
+}
 type LogItemType = {
   uid: string
   createdAt: string

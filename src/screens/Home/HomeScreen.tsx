@@ -2,7 +2,7 @@ import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetView,
 } from '@gorhom/bottom-sheet'
-import React, { useCallback, useMemo, useRef } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef } from 'react'
 import {
   Text,
   Button,
@@ -10,24 +10,11 @@ import {
   StyleSheet,
   View,
 } from 'react-native'
-import { auth } from '../../../firebase'
 import AdmonBannerSection from './components/AdmonBannerSection'
 import MonthlyContainer from './components/MonthlyContainer'
-import YogaTipSection from './components/YogaTipSection'
+import { atom, useRecoilState } from 'recoil'
 
 const HomeScreen = ({ navigation }): JSX.Element => {
-  const handleSignOut = () => {
-    auth
-      .signOut()
-      .then(() => {
-        // Sign-out successful.
-        navigation.replace('Login')
-      })
-      .catch((error) => {
-        // An error happened.
-        alert(error)
-      })
-  }
   const sheetRef = useRef<BottomSheet>(null)
 
   // variables
@@ -58,6 +45,17 @@ const HomeScreen = ({ navigation }): JSX.Element => {
   const handleClickDayItem = useCallback((dayItem) => {
     handleSnapPress(0)
   }, [])
+
+  const bottomSheetRefState = atom({
+    key: 'bottomSheetRefState',
+    default: -1,
+  })
+  const [bottomSheetState, setBottomSheetState] =
+    useRecoilState(bottomSheetRefState)
+
+  useEffect(() => {
+    handleSnapPress(bottomSheetState)
+  }, [])
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <MonthlyContainer
@@ -66,13 +64,9 @@ const HomeScreen = ({ navigation }): JSX.Element => {
         handleClickDayItem={handleClickDayItem}
       />
       {/* 광고 섹션 */}
-      <View style={styles.yogaTipContainer}>
-        <YogaTipSection />
-      </View>
       <View style={styles.bannerContainer}>
         <AdmonBannerSection />
       </View>
-      <Button title="Snap To 90%" onPress={() => handleSnapPress(0)} />
       <BottomSheet
         index={-1} //initial snap point index
         ref={sheetRef}
