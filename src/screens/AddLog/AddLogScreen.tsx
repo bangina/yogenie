@@ -76,9 +76,9 @@ const AddLogScreen = ({ navigation }): JSX.Element => {
   console.log(currQIdx, 'currQIdx')
 
   return (
-    <ScrollView style={{ display: 'flex' }}>
+    <ScrollView style={{ height: '100%', backgroundColor: 'white' }}>
       <KeyboardAvoidingView style={styles.container} behavior="padding">
-        <Text style={{ color: 'grey' }}>
+        <Text style={styles.daytext}>
           -{today.toDateString()}, {currQIdx}-
         </Text>
         <View style={styles.chatContainer}>
@@ -163,9 +163,12 @@ const AddLogScreen = ({ navigation }): JSX.Element => {
           </View>
         )}
 
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={() => clearList()}>
-            <Text style={styles.buttonText}>초기화</Text>
+        <View style={styles.initCntr}>
+          <TouchableOpacity
+            style={{ backgroundColor: 'pink' }}
+            onPress={() => clearList()}
+          >
+            <Text style={styles.buttonText}>Clear</Text>
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
@@ -176,29 +179,34 @@ const AddLogScreen = ({ navigation }): JSX.Element => {
 export default AddLogScreen
 
 const styles = StyleSheet.create({
-  chatContainer: {
+  container: {
     display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
+    flex: 1,
+    // backgroundColor: 'blue',
+    alignItems: 'center',
+    height: '100%',
+    minHeight: '100%',
+    paddingTop: 48,
+  },
+  daytext: {
+    fontSize: 12,
+    color: 'grey',
+    paddingVertical: 12,
+  },
+
+  chatContainer: {
+    flex: 1,
     width: '100%',
     borderColor: '#eee',
     borderWidth: 1,
-    flexGrow: 1,
     paddingHorizontal: 10,
     paddingVertical: 10,
     backgroundColor: '#fff',
   },
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 100,
-  },
-  buttonContainer: {
-    height: 100,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
+  initCntr: {
+    position: 'absolute',
+    top: 48,
+    right: 12,
   },
   button: {
     backgroundColor: colors.primary,
@@ -211,31 +219,28 @@ const styles = StyleSheet.create({
   },
   input: {
     paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 10,
     width: '100%',
     flex: 1,
+    borderRadius: 10,
     backgroundColor: '#fff',
   },
   chatInputCntr: {
     display: 'flex',
     flexDirection: 'row',
-    borderColor: 'red',
-    backgroundColor: '#fff',
-    color: 'red',
   },
   optionCntr: {
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    backgroundColor: '#fff',
+    // backgroundColor: 'red',
     width: '100%',
     justifyContent: 'center',
-    padding: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 12,
   },
   yesNoItem: {
     paddingHorizontal: 8,
-    paddingVertical: 8,
+    paddingVertical: 12,
     borderRadius: 100,
     marginHorizontal: 4,
     alignItems: 'center',
@@ -243,11 +248,17 @@ const styles = StyleSheet.create({
   },
   optionItem: {
     backgroundColor: colors.primary,
-    paddingHorizontal: 8,
+    paddingHorizontal: 12,
     paddingVertical: 8,
     borderRadius: 100,
     marginHorizontal: 4,
+    marginVertical: 2,
     alignItems: 'center',
   },
-  optionItemText: { fontSize: 12 },
+  optionItemText: {
+    fontSize: 14,
+    color: 'white',
+    letterSpacing: -0.4,
+    lineHeight: 14,
+  },
 })

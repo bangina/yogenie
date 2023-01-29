@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { colors } from '../../../../styles'
 
-
 const ChatBubble = ({ chatItem }) => {
   const [value, setValue] = useState('')
   return (
@@ -33,16 +32,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 10,
     borderRadius: 10,
-    marginVertical: 4,
     maxWidth: '90%',
   },
   genie: {
     backgroundColor: '#f2f2f2',
     alignSelf: 'flex-start',
+    marginBottom: 8,
   },
   user: {
     backgroundColor: colors.primary,
     alignSelf: 'flex-end',
+    marginBottom: 12,
   },
   genieText: {
     color: '#000',

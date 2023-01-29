@@ -8,7 +8,7 @@ export const enum QuestionType {
 
 export const GenieQuestionList = {
   start: {
-    label: { text: `님 오늘 요가 했어요?`, variable: 'username' },
+    label: { text: `인아님 오늘 요가 했어요?`, variable: 'username' },
     questionType: QuestionType.yesNo,
     nextMap: {
       yes: '1-1',
