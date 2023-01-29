@@ -12,14 +12,15 @@ import { colors } from '../../../styles'
 
 const LoginScreen = ({ navigation }) => {
   const [initializing, setInitializing] = useState(true)
-  const [user, setUser] = useState()
+  const [user, setUser] = useState(null)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   // Handle user state changes
   const onAuthStateChanged = (user) => {
+    console.log(user, 'user')
     //
-    setUser(user)
-    if (initializing) setInitializing(false)
+    if (user) setUser(user)
+    // if (initializing) setInitializing(false)
   }
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged)
@@ -32,8 +33,8 @@ const LoginScreen = ({ navigation }) => {
       .createUserWithEmailAndPassword(em, pw)
       .then((userCredential) => {
         // Signed in
-        const user = userCredential.user
-        console.log(user, 'user')
+        const userInfo = userCredential.user
+        console.log(userInfo, 'userInfo')
       })
       .catch((error) => {
         const errorCode = error.code
@@ -61,10 +62,11 @@ const LoginScreen = ({ navigation }) => {
       navigation.navigate('Home')
     }
   }, [user])
+
   if (initializing)
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding">
-        <Text>initializing</Text>
+        <Text>initializing...</Text>
       </KeyboardAvoidingView>
     )
   return (

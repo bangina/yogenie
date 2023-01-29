@@ -13,12 +13,13 @@ import {
 import AdmonBannerSection from './components/AdmonBannerSection'
 import MonthlyContainer from './components/MonthlyContainer'
 import { atom, useRecoilState } from 'recoil'
+import LogBottomSheetBody from './components/LogBottomSheetBody'
 
 const HomeScreen = ({ navigation }): JSX.Element => {
   const sheetRef = useRef<BottomSheet>(null)
 
   // variables
-  const snapPoints = useMemo(() => ['90%'], [])
+  const snapPoints = useMemo(() => ['80%'], [])
 
   // callbacks
   const handleSheetChange = useCallback((index) => {
@@ -63,10 +64,7 @@ const HomeScreen = ({ navigation }): JSX.Element => {
         month={1}
         handleClickDayItem={handleClickDayItem}
       />
-      {/* 광고 섹션 */}
-      <View style={styles.bannerContainer}>
-        <AdmonBannerSection />
-      </View>
+
       <BottomSheet
         index={-1} //initial snap point index
         ref={sheetRef}
@@ -75,7 +73,7 @@ const HomeScreen = ({ navigation }): JSX.Element => {
         backdropComponent={renderBackdrop}
       >
         <BottomSheetView>
-          <Text>Yoga Log Content</Text>
+          <LogBottomSheetBody />
         </BottomSheetView>
       </BottomSheet>
     </KeyboardAvoidingView>
@@ -92,10 +90,4 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   yogaTipContainer: {},
-  bannerContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-  },
 })

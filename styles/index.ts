@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native'
 export const colors = {
   primary: '#EC657F',
   black: '#222',
+  grey: '#333',
 }
 
 export const globalStyles = StyleSheet.create({
@@ -32,5 +33,20 @@ export const globalStyles = StyleSheet.create({
     backgroundColor: '#fff',
     borderColor: colors.primary,
     borderWidth: 1,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: colors.black,
+  },
+  subtitle: {
+    fontSize: 18,
+    fontWeight: '500',
+    letterSpacing: -0.02,
+  },
+  body: {
+    fontSize: 14,
+    borderColor: colors.grey,
+    letterSpacing: -0.02,
   },
 })
