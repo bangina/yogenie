@@ -110,8 +110,6 @@ export default function MonthlyContainer({
 }
 
 const DayItem = ({ dayItem, handleClickDayItem }: DayItemProps) => {
-  console.log(dayItem, 'dayItem')
-
   return (
     <TouchableOpacity style={styles.dayItem} onPress={handleClickDayItem}>
       {typeof dayItem === 'number' && dayItem % 2 === 0 ? (

@@ -3,23 +3,18 @@ import BottomSheet, {
   BottomSheetView,
 } from '@gorhom/bottom-sheet'
 import React, { useCallback, useEffect, useMemo, useRef } from 'react'
-import {
-  Text,
-  Button,
-  KeyboardAvoidingView,
-  StyleSheet,
-  View,
-} from 'react-native'
-import AdmonBannerSection from './components/AdmonBannerSection'
-import MonthlyContainer from './components/MonthlyContainer'
+import { KeyboardAvoidingView, StyleSheet } from 'react-native'
 import { atom, useRecoilState } from 'recoil'
-import LogBottomSheetBody from './components/LogBottomSheetBody'
+import { bottomSheetRefState } from '../../recoil'
+import LogBottomSheetBody from './components/LogBottomSheetBody/Index'
+import LogContent from './components/LogBottomSheetBody/LogContent'
+import MonthlyContainer from './components/MonthlyContainer'
 
 const HomeScreen = ({ navigation }): JSX.Element => {
   const sheetRef = useRef<BottomSheet>(null)
 
   // variables
-  const snapPoints = useMemo(() => ['80%'], [])
+  const snapPoints = useMemo(() => ['25%', '80%'], [])
 
   // callbacks
   const handleSheetChange = useCallback((index) => {
@@ -36,9 +31,10 @@ const HomeScreen = ({ navigation }): JSX.Element => {
     (props) => (
       <BottomSheetBackdrop
         {...props}
-        pressBehavior="close"
-        appearsOnIndex={0}
-        disappearsOnIndex={-1}
+        // pressBehavior="close"
+        pressBehavior="collapse"
+        appearsOnIndex={1}
+        disappearsOnIndex={0}
       />
     ),
     []
@@ -47,10 +43,6 @@ const HomeScreen = ({ navigation }): JSX.Element => {
     handleSnapPress(0)
   }, [])
 
-  const bottomSheetRefState = atom({
-    key: 'bottomSheetRefState',
-    default: -1,
-  })
   const [bottomSheetState, setBottomSheetState] =
     useRecoilState(bottomSheetRefState)
 
@@ -66,7 +58,7 @@ const HomeScreen = ({ navigation }): JSX.Element => {
       />
 
       <BottomSheet
-        index={-1} //initial snap point index
+        index={0} //initial snap point index
         ref={sheetRef}
         snapPoints={snapPoints}
         onChange={handleSheetChange}

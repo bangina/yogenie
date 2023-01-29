@@ -8,33 +8,43 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
+import { useRecoilState } from 'recoil'
 import { colors, globalStyles } from '../../../styles'
+import { newLogItemState } from '../../recoil'
 import ChatBubble from './components/ChatBubble'
 import { GenieQuestionList, QuestionType } from './types'
 
 const goodBye = '네 다음에 또 봐요 🧘'
 const AddLogScreen = ({ navigation }): JSX.Element => {
-  const [chatLogList, setChatLogList] = useState<any>([]) // UI 렌더링용
+  // Todo
+  // 1. setChatList set 해줄때마다 recoil state에 유저 답변 UPDATE
+  // 2. setChatList set 해줄때마다 firestore에 유저 답변 UPDATE
+  const [chatList, setChatList] = useState<any>([]) // UI 렌더링용
+  const [logItem, setLogItem] = useRecoilState(newLogItemState)
   const [currQIdx, setCurrQIdx] = useState<any>() //'1-1'
   const [value, setValue] = useState('')
   const clearList = () => {
-    setChatLogList([])
+    setChatList([])
     storeGenieAnswer(GenieQuestionList['start'])
     setCurrQIdx('start')
     setValue('')
+    setLogItem({})
   }
   // 유저가 enter 누르면 다음 질문으로 넘어가는 함수
   const storeUserAnswer = (selectedObj, qKey) => {
     // 현재 질문 객체 전체, user value 두개 넘겨줌
-    // 1. 유저가 선택한 답변을 chatLogList에 추가
+    // 1. 유저가 선택한 답변을 chatList에 추가
     // textinput 이면 그대로 저장, 키값이면
-    setChatLogList((prevList: any) => [
+    setChatList((prevList: any) => [
       ...prevList,
       { label: { text: selectedObj.text }, userType: 'user' },
     ])
+    setLogItem((prevAnswer: any) => {
+      return { ...prevAnswer, [qKey]: selectedObj.value }
+    })
     // 2. firebase에 유저가 선택한 답변 추가하여 저장
-    // firebase.database().ref('chatLogList').push({label: {text: value}, userType: "user"});
-    // 3. selectedObj의 키값을 가져와서, 그 키값에 해당하는 다음 질문을 chatLogList에 추가(지니)
+    // firebase.database().ref('chatList').push({label: {text: value}, userType: "user"});
+    // 3. selectedObj의 키값을 가져와서, 그 키값에 해당하는 다음 질문을 chatList에 추가(지니)
     const nextQItemKey = GenieQuestionList[qKey]?.nextMap.hasOwnProperty(
       'fixed'
     )
@@ -48,14 +58,14 @@ const AddLogScreen = ({ navigation }): JSX.Element => {
     setValue('') //input 초기화
   }
   const storeGenieAnswer = (currQItem) => {
-    // 1. 다음 질문을 chatLogList에 추가(지니)
-    setChatLogList((prevList: any) => [
+    // 1. 다음 질문을 chatList에 추가(지니)
+    setChatList((prevList: any) => [
       ...prevList,
       { label: { text: currQItem?.label?.text }, userType: 'genie' },
     ])
   }
   const handleFinish = (userInput) => {
-    setChatLogList((prevList: any) => [
+    setChatList((prevList: any) => [
       ...prevList,
       { label: { text: userInput }, userType: 'user' },
     ])
@@ -65,13 +75,13 @@ const AddLogScreen = ({ navigation }): JSX.Element => {
   const currentQItem = useMemo(() => GenieQuestionList[currQIdx], [currQIdx])
   useEffect(() => {
     // firebase에서 질문리스트 가져오기
-    // 1. 처음 질문을 chatLogList에 추가(지니)
-    if (chatLogList?.length === 0) {
+    // 1. 처음 질문을 chatList에 추가(지니)
+    if (chatList?.length === 0) {
       clearList()
     }
   }, [])
   const today = new Date()
-  console.log(chatLogList, 'chatLogList')
+  console.log(chatList, 'chatList')
   console.log(currentQItem, 'currentQItem')
   console.log(currQIdx, 'currQIdx')
 
@@ -82,7 +92,7 @@ const AddLogScreen = ({ navigation }): JSX.Element => {
           -{today.toDateString()}, {currQIdx}-
         </Text>
         <View style={styles.chatContainer}>
-          {chatLogList?.map((item, idx) => (
+          {chatList?.map((item, idx) => (
             <ChatBubble
               chatItem={item}
               key={idx + 'chat_buble'}
